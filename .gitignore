@@ -1,5 +1,36 @@
-*.pyc
+*.py[cod]
+
+# Packages
+*.egg
+*.egg-info
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+docs/_build
+
+# Cookiecutter
+output/
+
+# macos
 .DS_Store
-*.pyc
-XML_utilities/unicodecsv/__init__.pyc
-XML_utilities/unicodecsv/py2.pyc
