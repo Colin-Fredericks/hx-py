@@ -1,7 +1,5 @@
 """
-HarvardX Grading Library
-
-This includes substantial material from the MITx Grading Library
+MITx Grading Library
 https://github.com/mitodl/mitx-grading-library
 Copyright (c) 2017-2018 Jolyon Bloomfield and Chris Chudzicki
 All Rights Reserved
