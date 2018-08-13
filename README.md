@@ -3,6 +3,8 @@ HarvardX Python Grading Library
 
 This project collects the python grading functions that have been used in various HX courses and puts them all in one place so that they're easier to implement.
 
+In addition, we've folded in the [MITx grading library](https://github.com/mitodl/mitx-grading-library), so you should be able to call all of that from here as well.
+
 Currently Working On...
 -----------
 
