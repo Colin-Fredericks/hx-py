@@ -1,4 +1,4 @@
-HarvardX Python Grading Library
+HX-PY: HarvardX Python Grading Library
 ====================================
 
 This project collects the python grading functions that have been used in various HX courses and puts them all in one place so that they're easier to implement.
@@ -51,4 +51,4 @@ JSBridge
 
 Currently Available Tools
 ----------
-All other tools have been moved to the new [hx_util](https://github.com/Colin-Fredericks/hx_util) repository.
+All other tools have been moved to the new [hx-util](https://github.com/Colin-Fredericks/hx-util) repository.
