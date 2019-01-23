@@ -132,6 +132,18 @@ def videoWatchGrader(ans, grading):
         ]
     }
 
+def matchingWithParticipation(ans, right_answer, partial_credit, feedback, participation_credit):
+    base_return = matchingAGrader(ans, right_answer, partial_credit, feedback)
+
+    return {
+      'input_list': [
+        { 'ok': base_return['input_list'][0]['ok'],
+          'msg': base_return['input_list'][0]['msg'],
+          'grade_decimal': min( 1, participation_credit + base_return['input_list'][0]['grade_decimal'] )
+        },
+      ]
+    }
+
 def matchingAGrader(ans, right_answer, partial_credit, feedback):
 
   parsed = json.loads(ans)
@@ -204,7 +216,11 @@ def matchingAGrader(ans, right_answer, partial_credit, feedback):
       else:
         is_right = False
 
-    return is_right
+    return {
+      'input_list': [
+        { 'ok': is_right, 'msg': '', 'grade_decimal': 1 if is_right else 0 },
+      ]
+    }
 
 #######################################################################
 # The following block provides a grader for ordinal data.
