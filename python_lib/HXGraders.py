@@ -4,6 +4,68 @@ import random
 from numpy import median
 
 
+def pathwayGrader(
+    ans,
+    points_lookup,
+    new_options={"show_points": True, "grade_on": "score", "retain_negative": True},
+):
+
+    options = {"show_points": True, "grade_on": "score", "retain_negative": True}
+    options.update(new_options)
+
+    total_score = 0
+    number_groups = 0
+
+    # Get the student's answer.
+    parsed = json.loads(ans)
+    answer = json.loads(parsed["answer"])
+    max_score = points_lookup["final_total"]
+
+    # Get total number of points from opened boxes.
+    # Take the highest positive points from any set.
+    # If we retain_negative, then negative points always subtract.
+    for group in points_lookup:
+        minus_points = 0
+        plus_points = 0
+        if type(points_lookup[group]) is dict:
+            number_groups += 1
+            for choice in points_lookup[group]:
+                p = int(points_lookup[group][choice])
+                if (
+                    str(choice) in answer["ever_opened"]
+                    and p < 0
+                    and options["retain_negative"]
+                ):
+                    minus_points += int(p)
+                if str(choice) in answer["currently_open"] and p > 0:
+                    plus_points = max(plus_points, p)
+
+        # Divide by final total to get overall score.
+        total_score = total_score + plus_points + minus_points
+
+    if options["grade_on"] == "score":
+        # Make sure we don't go negative or over 100%.
+        raw_score = float(total_score) / float(max_score)
+        grade_decimal = median([0, raw_score, 1])
+
+    elif options["grade_on"] == "participation":
+        # Grade on how many options they have open instead.
+        grade_decimal = float(len(answer["currently_open"])) / float(number_groups)
+
+    if grade_decimal > 0.7:
+        isOK = True
+    elif grade_decimal > 0.2:
+        isOK = "Partial"
+    else:
+        isOK = False
+
+    msg = ""
+    if options["show_points"]:
+        msg = "Saved Score: " + str(total_score) + " points out of " + str(max_score)
+
+    return {"ok": isOK, "msg": msg, "grade_decimal": grade_decimal}
+
+
 def qualtricsSurveyGrader(ans, new_options={"survey_length": 1}):
 
     # Currently there are no options used in this problem type.
