@@ -37,13 +37,17 @@ def pathwayGrader(
                     and options["retain_negative"]
                 ):
                     minus_points += int(p)
-                if str(choice) in answer["currently_open"] and p > 0:
-                    plus_points = max(plus_points, p)
+                if options["grade_on"] == "exploration":
+                    if str(choice) in answer["ever_opened"] and p > 0:
+                        plus_points = max(plus_points, p)
+                else:
+                    if str(choice) in answer["currently_open"] and p > 0:
+                        plus_points = max(plus_points, p)
 
         # Divide by final total to get overall score.
         total_score = total_score + plus_points + minus_points
 
-    if options["grade_on"] == "score":
+    if options["grade_on"] == "score" or options["grade_on"] == "exploration":
         # Make sure we don't go negative or over 100%.
         raw_score = float(total_score) / float(max_score)
         grade_decimal = median([0, raw_score, 1])
