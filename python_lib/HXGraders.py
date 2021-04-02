@@ -156,10 +156,18 @@ def qualtricsSurveyGrader(ans, new_options={"survey_length": 1}):
 
     grade = raw_score / float(options["survey_length"])
 
-    if grade > 0.9:
+    if grade > 0.76:
         isOK = True
-    elif grade > 0.2:
+        grade = 1.0
+    elif grade > 0.51:
         isOK = "Partial"
+        grade = 0.75
+    elif grade > 0.26:
+        isOK = "Partial"
+        grade = 0.5
+    elif grade > 0.05:
+        isOK = "Partial"
+        grade = 0.25
     else:
         isOK = False
 
