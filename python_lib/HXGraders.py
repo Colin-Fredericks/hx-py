@@ -3,52 +3,47 @@ import math
 import random
 from numpy import median
 
+
 def multiTextResponseGrader(ans, new_options={"min_length": 0, "fill_all": False}):
 
-  options = {"min_length": 0, "fill_all": False}
-  options.update(new_options)
+    options = {"min_length": 0, "fill_all": False}
+    options.update(new_options)
 
-  # Parse the state and obtain the "answer" string from it.
-  parsed = json.loads(ans)
-  answers = json.loads(parsed["answer"])["answers"]
+    # Parse the state and obtain the "answer" string from it.
+    parsed = json.loads(ans)
+    answers = json.loads(parsed["answer"])["answers"]
 
-  # Remove quotes and whitespace from the ends.
-  for a in answers:
-    a = a.strip('"')
-    a = a.strip('"')
-    a = a.strip()
-
-  correctness = True
-  message = "Your input has been accepted."
-  grade = 0.5
-
-  # Check for sufficient length.
-  for a in answers:
-    if len(a) <= options["min_length"]:
-      correctness = False
-      message = "One of your responses is too short. Please try again."
-      grade = 0
-
-  # Check for blank answers.
-  if options["fill_all"]:
+    # Remove quotes and whitespace from the ends.
     for a in answers:
-      if len(a) == 0:
-        correctness = False
-        message = "One of your responses is blank. Please try again."
-        grade = 0
+        a = a.strip('"')
+        a = a.strip('"')
+        a = a.strip()
 
-  # If none of the above conditions fail, everything's good.
-  if correctness: grade = 1
+    correctness = True
+    message = "Your input has been accepted."
+    grade = 0.5
 
-  return {
-    "input_list": [
-      {
-        "ok": correctness,
-        "msg": message,
-        "grade_decimal": grade
-      }
-    ]
-  }
+    # Check for sufficient length.
+    for a in answers:
+        if len(a) <= options["min_length"]:
+            correctness = False
+            message = "One of your responses is too short. Please try again."
+            grade = 0
+
+    # Check for blank answers.
+    if options["fill_all"]:
+        for a in answers:
+            if len(a) == 0:
+                correctness = False
+                message = "One of your responses is blank. Please try again."
+                grade = 0
+
+    # If none of the above conditions fail, everything's good.
+    if correctness:
+        grade = 1
+
+    return {"input_list": [{"ok": correctness, "msg": message, "grade_decimal": grade}]}
+
 
 def journalingResponseGrader(ans, new_options={"min_length": 10}):
 
