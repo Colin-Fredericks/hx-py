@@ -53,7 +53,7 @@ def journalingResponseGrader(ans, new_options={"min_length": 10}):
     # Parse the state and obtain the "answer" string from it.
     parsed = json.loads(ans)
     answer = json.loads(parsed["answer"])["answer"]
-    length = json.loads(parsed["answer"])["length"]
+    length = len(answer)
 
     # Checking for sufficient length.
     if length >= options["min_length"]:
