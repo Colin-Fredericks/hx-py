@@ -25,7 +25,7 @@ def multiTextResponseGrader(ans, new_options={"min_length": 0, "fill_all": False
 
     # Check for sufficient length.
     for a in answers:
-        if len(a) <= options["min_length"]:
+        if len(a) < options["min_length"]:
             correctness = False
             message = "One of your responses is too short. Please try again."
             grade = 0
